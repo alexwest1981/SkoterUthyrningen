@@ -11,6 +11,7 @@ import org.example.membership.Member;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -199,4 +200,11 @@ public class Main {
             }
         }
     }
+
+    @SuppressWarnings("unused")
+    private void someMethod(MembershipService membershipService) {
+        // Temporär "användning" för att tysta varningen
+        Objects.requireNonNull(membershipService);
+    }
+
 }
