@@ -3,39 +3,37 @@ package org.example.membership;
 import java.util.List;
 
 public class MembershipService {
-    // Sköter logik kring medlemskap, status och medlemsregister
-    private MemberRegistry memberRegistry;
+    private final MemberRegistry memberRegistry;
 
-    // Skapar en ny MembershipService
     public MembershipService(MemberRegistry memberRegistry) {
         this.memberRegistry = memberRegistry;
     }
 
-    // Lägger till en ny medlem
+    /**
+     * Skapar och lägger till ny medlem.
+     */
     public Member addMember(String name, String statusLevel) {
-        int newId = generateUniqueId();
-        Member member = new Member(newId, name, statusLevel);
-        memberRegistry.addMember(member);
-        return member;
+        return memberRegistry.createAndAddMember(name, statusLevel);
     }
 
-    // Tar bort medlem baserat på id
     public boolean removeMember(int memberId) {
         return memberRegistry.removeMember(memberId);
     }
 
-    // Returnerar alla medlemmar i registret
+    public boolean updateMemberStatus(int memberId, String newStatus) {
+        Member m = memberRegistry.getMember(memberId);
+        if (m != null) {
+            m.setStatusLevel(newStatus);
+            return true;
+        }
+        return false;
+    }
+
     public List<Member> listAllMembers() {
         return memberRegistry.listMembers();
     }
 
-    // Returnerar medlemmar av viss status
-    public List<Member> listMembersByStatus(String statusLevel) {
-        return memberRegistry.filterByStatus(statusLevel);
-    }
-
-    // Genererar ett unikt medlems-id (enkelt, kan utökas)
-    private int generateUniqueId() {
-        return memberRegistry.listMembers().size() + 1;
+    public List<Member> listByStatus(String statusLevel) {
+        return memberRegistry.listByStatus(statusLevel);
     }
 }

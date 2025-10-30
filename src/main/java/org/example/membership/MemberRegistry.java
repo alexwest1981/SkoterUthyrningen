@@ -3,41 +3,36 @@ package org.example.membership;
 import java.util.*;
 
 public class MemberRegistry {
-    // Hanterar alla medlemmar i klubben
-    // Medlemmarna lagras i ett HashMap och kan snabbt sökas på id
-    private Map<Integer, Member> members;
+    private Map<Integer, Member> members = new HashMap<>();
+    private int nextId = 1;
 
-    // Skapar ett nytt register utan medlemmar
-    public MemberRegistry() {
-        members = new HashMap<>();
+    /**
+     * Skapar en ny medlem med unikt id, namn och status och lägger till i registret.
+     */
+    public Member createAndAddMember(String name, String statusLevel) {
+        int id = nextId++;
+        Member member = new Member(id, name, statusLevel);
+        members.put(id, member);
+        return member;
     }
 
-    // Lägger till medlem i registret
-    public void addMember(Member member) {
-        members.put(member.getId(), member);
-    }
-
-    // Tar bort medlem ur registret
     public boolean removeMember(int memberId) {
         return members.remove(memberId) != null;
     }
 
-    // Hämtar medlem via id
     public Member getMember(int memberId) {
         return members.get(memberId);
     }
 
-    // Returnerar en lista på alla medlemmar
     public List<Member> listMembers() {
         return new ArrayList<>(members.values());
     }
 
-    // Filtrerar medlemmar på statusnivå
-    public List<Member> filterByStatus(String statusLevel) {
+    public List<Member> listByStatus(String statusLevel) {
         List<Member> result = new ArrayList<>();
-        for (Member member : members.values()) {
-            if (statusLevel.equalsIgnoreCase(member.getStatusLevel())) {
-                result.add(member);
+        for (Member m : members.values()) {
+            if (m.getStatusLevel().equalsIgnoreCase(statusLevel)) {
+                result.add(m);
             }
         }
         return result;

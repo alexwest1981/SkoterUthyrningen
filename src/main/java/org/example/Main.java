@@ -200,11 +200,4 @@ public class Main {
             }
         }
     }
-
-    @SuppressWarnings("unused")
-    private void someMethod(MembershipService membershipService) {
-        // Temporär "användning" för att tysta varningen
-        Objects.requireNonNull(membershipService);
-    }
-
 }
