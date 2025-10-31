@@ -82,10 +82,11 @@ public class MainMenu {
         while (inMenu) {
             System.out.println("\n--- Utrustningsmeny ---");
             System.out.println("1. Lägg till snöskoter");
-            System.out.println("2. Lista tillgängliga snöskotrar");
-            System.out.println("3. Lista tillgängliga slädar");
-            System.out.println("4. Hyr snöskoter");
-            System.out.println("5. Hyr släde");
+            System.out.println("2. Lägg till släde");
+            System.out.println("3. Lista tillgängliga snöskotrar");
+            System.out.println("4. Lista tillgängliga slädar");
+            System.out.println("5. Hyr snöskoter");
+            System.out.println("6. Hyr släde");
             System.out.println("0. Tillbaka");
             System.out.print("Ange val: ");
 
@@ -93,10 +94,11 @@ public class MainMenu {
 
             switch (choice) {
                 case 1 -> addSnowmobile();
-                case 2 -> listAvailableSnowmobiles();
-                case 3 -> listAvailableSleds();
-                case 4 -> rentSnowmobile();
-                case 5 -> rentSled();
+                case 2 -> addSled();
+                case 3 -> listAvailableSnowmobiles();
+                case 4 -> listAvailableSleds();
+                case 5 -> rentSnowmobile();
+                case 6 -> rentSled();
                 case 0 -> inMenu = false;
                 default -> System.out.println("Ogiltigt val, försök igen!");
             }
@@ -194,6 +196,18 @@ public class MainMenu {
         Snowmobile snow = new Snowmobile(desc, model, hk, elstart);
         inventory.addItem(snow);
         System.out.println("Snöskoter tillagd: " + snow);
+    }
+
+    private void addSled() {
+        System.out.print("Beskrivning och årtal: ");
+        String desc = scanner.nextLine();
+
+        System.out.print("Pris: ");
+        double price = Double.parseDouble(scanner.nextLine());
+
+        org.example.items.Sled sled = new org.example.items.Sled(desc, price);
+        inventory.addItem(sled);
+        System.out.println("Släde tillagd: " + sled);
     }
 
     private void listAvailableSnowmobiles() {

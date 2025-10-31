@@ -18,6 +18,6 @@ public class Sled extends Item {
 
     @Override
     public String toString() {
-        return super.toString() + ", Viktkapacitet: " + "kg";
+        return super.toString() + ", Viktkapacitet: " + weightCapacity + " kg";
     }
 }
