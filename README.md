@@ -36,24 +36,24 @@ Det här systemet hanterar uthyrning av snöskotrar till olika medlemmar. Det re
 
 ## Projektstruktur
 
-org.example<br>
-│<br>
-├── Main.java # Konsolmeny och startpunkt<br>
-├── Inventory.java # Lagerhantering av utrustning<br>
-├── Item.java # Abstrakt basklass för utrustning<br>
-├── Snowmobile.java # Subklass för snöskotrar<br>
-├── Rental.java # Modell för en uthyrning<br>
-├── RentalService.java # Affärslogik för uthyrningar<br>
+org.example
 │
-├── membership # Paket för medlemsrelaterade klasser<br>
-│ ├── Member.java # Medlemsklass med status och historik<br>
-│ ├── MemberRegistry.java # Register för medlemmar<br>
-│ └── MembershipService.java # Logik för medlemskapshantering<br>
-│<br>
-└── policy # Paket för prissättning<br>
-├── PricePolicy.java # Interface för prispolicy<br>
-├── StandardPricePolicy.java # Standard dagpris<br>
-└── PremiumPricePolicy.java # Rabatt för premium<br>
+├── Main.java # Konsolmeny och startpunkt
+├── Inventory.java # Lagerhantering av utrustning
+├── Item.java # Abstrakt basklass för utrustning
+├── Snowmobile.java # Subklass för snöskotrar
+├── Rental.java # Modell för en uthyrning
+├── RentalService.java # Affärslogik för uthyrningar
+│
+├── membership # Paket för medlemsrelaterade klasser
+│ ├── Member.java # Medlemsklass med status och historik
+│ ├── MemberRegistry.java # Register för medlemmar
+│ └── MembershipService.java # Logik för medlemskapshantering
+│
+└── policy # Paket för prissättning
+├── PricePolicy.java # Interface för prispolicy
+├── StandardPricePolicy.java # Standard dagpris
+└── PremiumPricePolicy.java # Rabatt för premium
 
 ---
 
@@ -103,4 +103,4 @@ Detta är ett skolprojekt och får användas enligt överenskommelse med uppdrag
 
 ---
 
-*Skoteruthyrningssystemet - Förberedelse av nästa generations utvecklare*  
+*Skoteruthyrningssystemet - Förberedelse av nästa generations utvecklare*
