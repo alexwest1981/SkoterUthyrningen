@@ -46,14 +46,14 @@ public class Main {
             System.out.println("2. Ta bort medlem");
             System.out.println("3. Lista medlemmar");
             System.out.println("4. Sök medlem efter namn");
-            System.out.println("5. Lägg till snöskoter");
-            System.out.println("6. Lista tillgängliga snöskotrar");
-            System.out.println("7. Hyr snöskoter");
-            System.out.println("8. Lista tillgängliga slädar");  // Nytt val för slädar
-            System.out.println("9. Avsluta hyrning");
-            System.out.println("10. Visa pågående uthyrningar");
-            System.out.println("11. Visa intäkter");
-            System.out.println("0. Avsluta program");
+            System.out.println("5. Lista medlemmar efter status");
+            System.out.println("6. Lägg till snöskoter");
+            System.out.println("7. Lista tillgängliga snöskotrar");
+            System.out.println("8. Hyr snöskoter");
+            System.out.println("9. Lista tillgängliga slädar");  // Nytt val för slädar
+            System.out.println("10. Avsluta hyrning");
+            System.out.println("11. Visa pågående uthyrningar");
+            System.out.println("12. Avsluta program");
             System.out.print("Ange val: ");
 
             int choice = readInt(scanner);
@@ -63,13 +63,14 @@ public class Main {
                 case 2 -> removeMember(scanner, membershipService);
                 case 3 -> listMembers(membershipService);
                 case 4 -> searchMemberByName(scanner, membershipService);
-                case 5 -> addSnowmobile(scanner, inventory);
-                case 6 -> listAvailableSnowmobiles(inventory);
-                case 7 -> rentSnowmobile(scanner, rentalService, membershipService, inventory);
-                case 8 -> listAvailableSleds(inventory);  // Hantera slädar
-                case 9 -> finishRental(scanner, rentalService);
-                case 10 -> listActiveRentals(rentalService);
-                case 11 -> showTotalRevenue(rentalService);
+                case 5 -> filterMembersByStatus(scanner, membershipService);
+                case 6 -> addSnowmobile(scanner, inventory);
+                case 7 -> listAvailableSnowmobiles(inventory);
+                case 8 -> rentSnowmobile(scanner, rentalService, membershipService, inventory);
+                case 9 -> listAvailableSleds(inventory);  // Hantera slädar
+                case 10 -> finishRental(scanner, rentalService);
+                case 11 -> listActiveRentals(rentalService);
+                case 12 -> showTotalRevenue(rentalService);
                 case 0 -> running = false;
                 default -> System.out.println("Ogiltigt val, försök igen!");
             }
@@ -116,6 +117,21 @@ public class Main {
         } else {
             System.out.println("Matchande medlemmar:");
             for (Member m : results) {
+                System.out.println(m);
+            }
+        }
+    }
+
+    // Filtrering av medlemmar
+    private static void filterMembersByStatus(Scanner scanner, MembershipService membershipService) {
+        System.out.print("Ange status att filtrera på (Standard/Premium): ");
+        String status = scanner.nextLine();
+        List<Member> filtered = membershipService.filterMembersByStatus(status);
+        if (filtered.isEmpty()) {
+            System.out.println("Inga medlemmar med status " + status);
+        } else {
+            System.out.println("Medlemmar med status " + status + ":");
+            for (Member m : filtered) {
                 System.out.println(m);
             }
         }

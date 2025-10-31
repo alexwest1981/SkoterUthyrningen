@@ -6,9 +6,8 @@ public class MemberRegistry {
     private Map<Integer, Member> members = new HashMap<>();
     private int nextId = 1;
 
-    /**
-     * Skapar en ny medlem med unikt id, namn och status och lägger till i registret.
-     */
+     // Skapar en ny medlem med unikt id, namn och status och lägger till i registret.
+
     public Member createAndAddMember(String name, String statusLevel) {
         int id = nextId++;
         Member member = new Member(id, name, statusLevel);
@@ -49,4 +48,16 @@ public class MemberRegistry {
         }
         return result;
     }
+
+    // Filtrerar medlemmar baserat på medlemsstatus.
+    public List<Member> filterByStatus(String statusLevel) {
+        List<Member> filtered = new ArrayList<>();
+        for (Member member : members.values()) {
+            if (member.getStatusLevel().equalsIgnoreCase(statusLevel)) {
+                filtered.add(member);
+            }
+        }
+        return filtered;
+    }
+
 }

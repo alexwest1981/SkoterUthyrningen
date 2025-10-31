@@ -41,4 +41,7 @@ public class MembershipService {
         return memberRegistry.searchByName(searchTerm);
     }
 
+    public List<Member> filterMembersByStatus(String statusLevel) {
+        return memberRegistry.filterByStatus(statusLevel);
+    }
 }
