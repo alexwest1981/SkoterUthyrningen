@@ -1,263 +1,41 @@
 package org.example;
 
-/*
-*   Dokumentation (DOC.md) ger dig all information om projektets struktur och funktion
-*   Readme (README.md) innefattar mer projektets funktioner och allmän information.
-*/
-
 import org.example.items.Inventory;
-import org.example.items.Snowmobile;
-import org.example.items.Sled;
 import org.example.membership.MemberRegistry;
 import org.example.membership.MembershipService;
-import org.example.membership.Member;
-import org.example.rental.Rental;
 import org.example.rental.RentalService;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Scanner;
+import org.example.MainMenu;
 
 public class Main {
-    // Mainklass med huvudmetod och menysystem för skoteruthyrningen
     public static void main(String[] args) {
+        // Skapa instanser av de behövda objekten
         Inventory inventory = new Inventory();
         MemberRegistry memberRegistry = new MemberRegistry();
         RentalService rentalService = new RentalService(inventory, memberRegistry);
         MembershipService membershipService = new MembershipService(memberRegistry);
 
-        // Exempeldata
-        inventory.addItem(new Snowmobile("Yamaha VK Professional II - 2020", "VK Pro II", 130, true));
-        inventory.addItem(new Snowmobile("Polaris Titan Adventure - 2021", "Titan Adventure", 160, false));
-        inventory.addItem(new Snowmobile("Yamaha VK Professional II - 2020", "VK Pro II", 130, true));
-        inventory.addItem(new Snowmobile("Polaris Titan Adventure - 2021", "Titan Adventure", 160, false));
-        inventory.addItem(new Sled("Arctic Sled Model X - 2019", 250.0));
-        inventory.addItem(new Sled("Winter Sled 2000", 300.0));
+        // Lägg till exempeldata för testning
+        addSampleData(inventory, membershipService);
+
+        // Skapa menyn och starta den
+        MainMenu mainMenu = new MainMenu(inventory, memberRegistry, rentalService, membershipService);
+        mainMenu.start();
+    }
+
+    private static void addSampleData(Inventory inventory, MembershipService membershipService) {
+        // Lägger till exempelobjekt för demo
+        // (Samma som i ditt tidigare exempel)
+        inventory.addItem(new org.example.items.Snowmobile("Yamaha VK Professional II - 2020", "VK Pro II", 130, true));
+        inventory.addItem(new org.example.items.Snowmobile("Polaris Titan Adventure - 2021", "Titan Adventure", 160, false));
+        inventory.addItem(new org.example.items.Sled("Arctic Sled Model X - 2019", 250.0));
+        inventory.addItem(new org.example.items.Sled("Winter Sled 2000", 300.0));
+
+        // Lägg till några medlemmar
         membershipService.addMember("Sven Norrlund", "Standard");
         membershipService.addMember("Anna Svanström", "Premium");
         membershipService.addMember("Anna Svensson", "Premium");
         membershipService.addMember("Björn Johansson", "Standard");
         membershipService.addMember("Carina Larsson", "Premium");
         membershipService.addMember("David Eriksson", "Standard");
-
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
-
-        while (running) {
-            System.out.println("\n----- Skoteruthyrning Norrlänningar -----");
-            System.out.println("1. Lägg till medlem");
-            System.out.println("2. Ta bort medlem");
-            System.out.println("3. Lista medlemmar");
-            System.out.println("4. Sök medlem efter namn");
-            System.out.println("5. Lista medlemmar efter status");
-            System.out.println("6. Lägg till snöskoter");
-            System.out.println("7. Lista tillgängliga snöskotrar");
-            System.out.println("8. Hyr snöskoter");
-            System.out.println("9. Lista tillgängliga slädar");  // Nytt val för slädar
-            System.out.println("10. Avsluta hyrning");
-            System.out.println("11. Visa pågående uthyrningar");
-            System.out.println("12. Avsluta program");
-            System.out.print("Ange val: ");
-
-            int choice = readInt(scanner);
-
-            switch (choice) {
-                case 1 -> addMember(scanner, membershipService);
-                case 2 -> removeMember(scanner, membershipService);
-                case 3 -> listMembers(membershipService);
-                case 4 -> searchMemberByName(scanner, membershipService);
-                case 5 -> filterMembersByStatus(scanner, membershipService);
-                case 6 -> addSnowmobile(scanner, inventory);
-                case 7 -> listAvailableSnowmobiles(inventory);
-                case 8 -> rentSnowmobile(scanner, rentalService, membershipService, inventory);
-                case 9 -> listAvailableSleds(inventory);  // Hantera slädar
-                case 10 -> finishRental(scanner, rentalService);
-                case 11 -> listActiveRentals(rentalService);
-                case 12 -> showTotalRevenue(rentalService);
-                case 0 -> running = false;
-                default -> System.out.println("Ogiltigt val, försök igen!");
-            }
-        }
-
-        System.out.println("Avslutar programmet. Tack för att du använde SkoterUthyrningen");
-        scanner.close();
-    }
-    // --- Menyfunktioner nedan ---
-
-    private static void addMember(Scanner scanner, MembershipService membershipService) {
-        System.out.print("Namn på medlem: ");
-        String name = scanner.nextLine();
-        System.out.print("Statusnivå (Standard/Premium): ");
-        String status = scanner.nextLine();
-        Member member = membershipService.addMember(name, status);
-        System.out.println("Medlem tillagd: " + member);
-    }
-
-    private static void removeMember(Scanner scanner, MembershipService membershipService) {
-        System.out.print("Ange medlems-ID att ta bort: ");
-        int id = readInt(scanner);
-        if (membershipService.removeMember(id)) {
-            System.out.println("Medlem borttagen.");
-        } else {
-            System.out.println("Medlemmen finns ej.");
-        }
-    }
-
-    private static void listMembers(MembershipService membershipService) {
-        System.out.println("\n--- Medlemslista ---");
-        for (Member m : membershipService.listAllMembers()) {
-            System.out.println(m);
-        }
-    }
-
-    private static void searchMemberByName(Scanner scanner, MembershipService membershipService) {
-        System.out.print("Ange namn eller del av namn att söka: ");
-        String searchTerm = scanner.nextLine();
-
-        List<Member> results = membershipService.searchMembersByName(searchTerm);
-        if (results.isEmpty()) {
-            System.out.println("Inga medlemmar matchade sökningen.");
-        } else {
-            System.out.println("Matchande medlemmar:");
-            for (Member m : results) {
-                System.out.println(m);
-            }
-        }
-    }
-
-    // Filtrering av medlemmar
-    private static void filterMembersByStatus(Scanner scanner, MembershipService membershipService) {
-        System.out.print("Ange status att filtrera på (Standard/Premium): ");
-        String status = scanner.nextLine();
-        List<Member> filtered = membershipService.filterMembersByStatus(status);
-        if (filtered.isEmpty()) {
-            System.out.println("Inga medlemmar med status " + status);
-        } else {
-            System.out.println("Medlemmar med status " + status + ":");
-            for (Member m : filtered) {
-                System.out.println(m);
-            }
-        }
-    }
-
-    private static void addSnowmobile(Scanner scanner, Inventory inventory) {
-        System.out.print("Beskrivning och årtal: ");
-        String desc = scanner.nextLine();
-        System.out.print("Modellnamn: ");
-        String model = scanner.nextLine();
-        System.out.print("Effekt (hk): ");
-        int hk = readInt(scanner);
-        System.out.print("Elstart (true/false): ");
-        boolean elstart = Boolean.parseBoolean(scanner.nextLine());
-        Snowmobile snow = new Snowmobile(desc, model, hk, elstart);
-        inventory.addItem(snow);
-        System.out.println("Snöskoter tillagd: " + snow);
-    }
-
-    private static void listAvailableSnowmobiles(Inventory inventory) {
-        System.out.println("\n--- Tillgängliga snöskotrar ---");
-        for (Snowmobile s : inventory.filterByType(Snowmobile.class)) {
-            if (s.isAvailable()) {
-                System.out.println(s);
-            }
-        }
-    }
-
-    private static void rentSnowmobile(Scanner scanner, RentalService rentalService,
-                                       MembershipService membershipService, Inventory inventory) {
-        List<Snowmobile> available = inventory.filterByType(Snowmobile.class);
-        if (available.isEmpty()) {
-            System.out.println("Inga tillgängliga snöskotrar för uthyrning.");
-            return;
-        }
-
-        System.out.println("\n--- Tillgängliga snöskotrar ---");
-        for (int i = 0; i < available.size(); i++) {
-            Snowmobile s = available.get(i);
-            System.out.println((i + 1) + ". " + s);
-        }
-
-        System.out.print("Ange medlems-ID: ");
-        int memId = readInt(scanner);
-
-        System.out.print("Välj snöskoter med nummer: ");
-        int choice;
-        while (true) {
-            choice = readInt(scanner);
-            if (choice >= 1 && choice <= available.size()) {
-                break;
-            }
-            System.out.print("Felaktigt val. Försök igen: ");
-        }
-
-        Snowmobile selected = available.get(choice - 1);
-
-        System.out.print("Startdatum (ÅÅÅÅ-MM-DD): ");
-        LocalDate start = LocalDate.parse(scanner.nextLine());
-        System.out.print("Slutdatum (ÅÅÅÅ-MM-DD): ");
-        LocalDate end = LocalDate.parse(scanner.nextLine());
-
-        Rental rental = rentalService.rentItem(memId, selected.getId(), start, end);
-        if (rental != null) {
-            System.out.println("Hyrning genomförd: " + rental);
-        } else {
-            System.out.println("Det gick ej att boka. Kontrollera att ID stämmer och att snöskotern är ledig!");
-        }
-    }
-
-    private static void listAvailableSleds(Inventory inventory) {
-        List<Sled> sleds = inventory.filterByType(Sled.class);
-        if (sleds.isEmpty()) {
-            System.out.println("Inga slädar tillgängliga.");
-        } else {
-            System.out.println("\n--- Tillgängliga slädar ---");
-            for (Sled sled : sleds) {
-                System.out.println(sled);
-            }
-        }
-    }
-
-    private static void finishRental(Scanner scanner, RentalService rentalService) {
-        listActiveRentals(rentalService);
-        System.out.print("Ange snöskoter-ID för hyrning som ska avslutas: ");
-        String skiId = scanner.nextLine();
-        Rental rental = null;
-        for (Rental r : rentalService.getActiveRentals()) {
-            if (r.getItem().getId().equals(skiId)) {
-                rental = r;
-                break;
-            }
-        }
-        if (rental == null) {
-            System.out.println("Ingen pågående uthyrning för valt ID.");
-            return;
-        }
-        System.out.print("Avslutsdatum (ÅÅÅÅ-MM-DD): ");
-        LocalDate retDate = LocalDate.parse(scanner.nextLine());
-        double total = rentalService.finishRental(rental, retDate);
-        System.out.println("Hyra avslutad. Slutpris: " + total + " kr");
-    }
-
-    private static void listActiveRentals(RentalService rentalService) {
-        System.out.println("\n--- Pågående uthyrningar ---");
-        for (Rental r : rentalService.getActiveRentals()) {
-            System.out.println(r);
-        }
-    }
-
-    private static void showTotalRevenue(RentalService rentalService) {
-        System.out.println("Totala intäkter: " + rentalService.getTotalRevenue() + " kr");
-    }
-
-    // Robust inputhantering
-    private static int readInt(Scanner scanner) {
-        while (true) {
-            try {
-                String in = scanner.nextLine();
-                return Integer.parseInt(in.trim());
-            } catch (Exception ex) {
-                System.out.println("Felaktig siffra, försök igen.");
-            }
-        }
     }
 }
