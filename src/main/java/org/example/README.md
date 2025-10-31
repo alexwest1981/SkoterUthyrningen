@@ -55,8 +55,6 @@ org.example
 ├── StandardPricePolicy.java # Standard dagpris
 └── PremiumPricePolicy.java # Rabatt för premium
 
-text
-
 ---
 
 ## Installation och körning
@@ -105,4 +103,4 @@ Detta är ett skolprojekt och får användas enligt överenskommelse med uppdrag
 
 ---
 
-*Skoteruthyrningssystemet - Förberedelse av nästa generations utvecklare*  
+*Skoteruthyrningssystemet - Förberedelse av nästa generations utvecklare*

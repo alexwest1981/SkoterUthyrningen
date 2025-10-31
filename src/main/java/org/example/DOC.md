@@ -26,8 +26,10 @@ Skoteruthyrningssystemet är ett modernt, modulärt Java-projekt för uthyrning 
   Bas för alla utrustningar med unikt id, beskrivning och tillgänglighetsstatus.
 - **Snowmobile.java**  
   Ärver från Item och har attribut specifika för snöskotrar som modell, hästkrafter, elstart.
+- **Sled.java**  
+  Ny subklass som ärver från Item, med attribut för viktkapacitet.
 - **Inventory.java**  
-  Lagrar och hanterar samling av Item-objekt, inklusive metoder för tilllägg/removal och filtrering.
+  Lagrar och hanterar samling av Item-objekt, inklusive metoder för tillägg, borttagning, och filtrering.
 - **Rental.java**  
   Kopplar medlem, utrustning och hyrperiod, samt lagrar pris.
 - **RentalService.java**  
