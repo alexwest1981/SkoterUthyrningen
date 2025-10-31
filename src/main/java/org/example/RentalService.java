@@ -50,7 +50,7 @@ public class RentalService {
      */
     public Rental rentItem(int memberId, String itemId, LocalDate startDate, LocalDate endDate) {
         Member member = memberRegistry.getMember(memberId);
-        Item item = inventory.getItem(itemId);
+        Item item = inventory.getItemById(itemId);  // Ändrat här
 
         if (member == null || item == null || !item.isAvailable()) {
             return null; // Felhantering - bokning nekas
@@ -60,7 +60,6 @@ public class RentalService {
             return null; // Felhantering -  ogiltig tidsperiod
         }
 
-        // Välj policy baserat på medlem
         PricePolicy policyToUse = pricePolicy;
         if ("Premium".equalsIgnoreCase(member.getStatusLevel())) {
             policyToUse = new PremiumPricePolicy();

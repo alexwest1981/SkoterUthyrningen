@@ -37,4 +37,16 @@ public class MemberRegistry {
         }
         return result;
     }
+
+    // Sökfunktion bland medlemmar
+    public List<Member> searchByName(String searchTerm) {
+        List<Member> result = new ArrayList<>();
+        String lowerTerm = searchTerm.toLowerCase();
+        for (Member member : members.values()) {
+            if (member.getName().toLowerCase().contains(lowerTerm)) {
+                result.add(member);
+            }
+        }
+        return result;
+    }
 }

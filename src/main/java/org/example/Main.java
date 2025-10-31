@@ -5,13 +5,14 @@ package org.example;
 *   Readme (README.md) innefattar mer projektets funktioner och allmän information.
 */
 
+import org.example.items.Snowmobile;
+import org.example.items.Sled;
 import org.example.membership.MemberRegistry;
 import org.example.membership.MembershipService;
 import org.example.membership.Member;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -25,8 +26,16 @@ public class Main {
         // Exempeldata
         inventory.addItem(new Snowmobile("Yamaha VK Professional II - 2020", "VK Pro II", 130, true));
         inventory.addItem(new Snowmobile("Polaris Titan Adventure - 2021", "Titan Adventure", 160, false));
+        inventory.addItem(new Snowmobile("Yamaha VK Professional II - 2020", "VK Pro II", 130, true));
+        inventory.addItem(new Snowmobile("Polaris Titan Adventure - 2021", "Titan Adventure", 160, false));
+        inventory.addItem(new Sled("Arctic Sled Model X - 2019", 250.0));
+        inventory.addItem(new Sled("Winter Sled 2000", 300.0));
         membershipService.addMember("Sven Norrlund", "Standard");
         membershipService.addMember("Anna Svanström", "Premium");
+        membershipService.addMember("Anna Svensson", "Premium");
+        membershipService.addMember("Björn Johansson", "Standard");
+        membershipService.addMember("Carina Larsson", "Premium");
+        membershipService.addMember("David Eriksson", "Standard");
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -36,12 +45,14 @@ public class Main {
             System.out.println("1. Lägg till medlem");
             System.out.println("2. Ta bort medlem");
             System.out.println("3. Lista medlemmar");
-            System.out.println("4. Lägg till snöskoter");
-            System.out.println("5. Lista tillgängliga snöskotrar");
-            System.out.println("6. Hyr snöskoter");
-            System.out.println("7. Avsluta hyrning");
-            System.out.println("8. Visa pågående uthyrningar");
-            System.out.println("9. Visa intäkter");
+            System.out.println("4. Sök medlem efter namn");
+            System.out.println("5. Lägg till snöskoter");
+            System.out.println("6. Lista tillgängliga snöskotrar");
+            System.out.println("7. Hyr snöskoter");
+            System.out.println("8. Lista tillgängliga slädar");  // Nytt val för slädar
+            System.out.println("9. Avsluta hyrning");
+            System.out.println("10. Visa pågående uthyrningar");
+            System.out.println("11. Visa intäkter");
             System.out.println("0. Avsluta program");
             System.out.print("Ange val: ");
 
@@ -51,16 +62,19 @@ public class Main {
                 case 1 -> addMember(scanner, membershipService);
                 case 2 -> removeMember(scanner, membershipService);
                 case 3 -> listMembers(membershipService);
-                case 4 -> addSnowmobile(scanner, inventory);
-                case 5 -> listAvailableSnowmobiles(inventory);
-                case 6 -> rentSnowmobile(scanner, rentalService, membershipService, inventory);
-                case 7 -> finishRental(scanner, rentalService);
-                case 8 -> listActiveRentals(rentalService);
-                case 9 -> showTotalRevenue(rentalService);
+                case 4 -> searchMemberByName(scanner, membershipService);
+                case 5 -> addSnowmobile(scanner, inventory);
+                case 6 -> listAvailableSnowmobiles(inventory);
+                case 7 -> rentSnowmobile(scanner, rentalService, membershipService, inventory);
+                case 8 -> listAvailableSleds(inventory);  // Hantera slädar
+                case 9 -> finishRental(scanner, rentalService);
+                case 10 -> listActiveRentals(rentalService);
+                case 11 -> showTotalRevenue(rentalService);
                 case 0 -> running = false;
                 default -> System.out.println("Ogiltigt val, försök igen!");
             }
         }
+
         System.out.println("Avslutar programmet. Tack för att du använde SkoterUthyrningen");
         scanner.close();
     }
@@ -89,6 +103,21 @@ public class Main {
         System.out.println("\n--- Medlemslista ---");
         for (Member m : membershipService.listAllMembers()) {
             System.out.println(m);
+        }
+    }
+
+    private static void searchMemberByName(Scanner scanner, MembershipService membershipService) {
+        System.out.print("Ange namn eller del av namn att söka: ");
+        String searchTerm = scanner.nextLine();
+
+        List<Member> results = membershipService.searchMembersByName(searchTerm);
+        if (results.isEmpty()) {
+            System.out.println("Inga medlemmar matchade sökningen.");
+        } else {
+            System.out.println("Matchande medlemmar:");
+            for (Member m : results) {
+                System.out.println(m);
+            }
         }
     }
 
@@ -154,6 +183,18 @@ public class Main {
             System.out.println("Hyrning genomförd: " + rental);
         } else {
             System.out.println("Det gick ej att boka. Kontrollera att ID stämmer och att snöskotern är ledig!");
+        }
+    }
+
+    private static void listAvailableSleds(Inventory inventory) {
+        List<Sled> sleds = inventory.filterByType(Sled.class);
+        if (sleds.isEmpty()) {
+            System.out.println("Inga slädar tillgängliga.");
+        } else {
+            System.out.println("\n--- Tillgängliga slädar ---");
+            for (Sled sled : sleds) {
+                System.out.println(sled);
+            }
         }
     }
 

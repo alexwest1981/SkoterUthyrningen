@@ -36,4 +36,9 @@ public class MembershipService {
     public List<Member> listByStatus(String statusLevel) {
         return memberRegistry.listByStatus(statusLevel);
     }
+
+    public List<Member> searchMembersByName(String searchTerm) {
+        return memberRegistry.searchByName(searchTerm);
+    }
+
 }
