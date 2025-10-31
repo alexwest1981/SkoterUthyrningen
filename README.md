@@ -41,10 +41,14 @@ org.example<br>
 ├── Main.java # Konsolmeny och startpunkt<br>
 ├── Inventory.java # Lagerhantering av utrustning<br>
 ├── Item.java # Abstrakt basklass för utrustning<br>
-├── Snowmobile.java # Subklass för snöskotrar<br>
+│<br>
+├── item # Paket för uthyrningsobjekt<br>
+│ ├── Snowmobile.java # Subklass för snöskotrar<br>
+│ ├── Sled.java # Subklass för slädar<br>
+│<br>
 ├── Rental.java # Modell för en uthyrning<br>
 ├── RentalService.java # Affärslogik för uthyrningar<br>
-│
+│<br>
 ├── membership # Paket för medlemsrelaterade klasser<br>
 │ ├── Member.java # Medlemsklass med status och historik<br>
 │ ├── MemberRegistry.java # Register för medlemmar<br>
@@ -103,4 +107,4 @@ Detta är ett skolprojekt och får användas enligt överenskommelse med uppdrag
 
 ---
 
-*Skoteruthyrningssystemet - Förberedelse av nästa generations utvecklare*  
+*Skoteruthyrningssystemet - Förberedelse av nästa generations utvecklare*
