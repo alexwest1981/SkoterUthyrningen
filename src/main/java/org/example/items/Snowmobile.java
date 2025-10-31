@@ -1,7 +1,5 @@
 package org.example.items;
 
-import org.example.Item;
-
 /**
  * Representerar en snöskoter som kan hyras ut i systemet.
  * Är en subklass till Item.

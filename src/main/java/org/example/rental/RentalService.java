@@ -1,5 +1,7 @@
-package org.example;
+package org.example.rental;
 
+import org.example.items.Inventory;
+import org.example.items.Item;
 import org.example.membership.Member;
 import org.example.membership.MemberRegistry;
 import org.example.policy.PremiumPricePolicy;

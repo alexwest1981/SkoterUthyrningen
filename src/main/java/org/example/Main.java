@@ -5,11 +5,14 @@ package org.example;
 *   Readme (README.md) innefattar mer projektets funktioner och allmän information.
 */
 
+import org.example.items.Inventory;
 import org.example.items.Snowmobile;
 import org.example.items.Sled;
 import org.example.membership.MemberRegistry;
 import org.example.membership.MembershipService;
 import org.example.membership.Member;
+import org.example.rental.Rental;
+import org.example.rental.RentalService;
 
 import java.time.LocalDate;
 import java.util.List;

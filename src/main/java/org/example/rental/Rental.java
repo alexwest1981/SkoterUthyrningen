@@ -1,5 +1,6 @@
-package org.example;
+package org.example.rental;
 
+import org.example.items.Item;
 import org.example.membership.Member;
 import java.time.LocalDate;
 

@@ -1,7 +1,5 @@
 package org.example.items;
 
-import org.example.Item;
-
 public class Sled extends Item {
     private double weightCapacity; // Viktkapacitet i kilo
 

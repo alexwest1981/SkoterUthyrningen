@@ -1,6 +1,6 @@
 package org.example.policy;
 
-import org.example.Item;
+import org.example.items.Item;
 
 /**
  * Interface för att beräkna pris för uthyrning enligt olika strategier.

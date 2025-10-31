@@ -1,6 +1,6 @@
 package org.example.policy;
 
-import org.example.Item;
+import org.example.items.Item;
 
 /**
  * Prispolicy som ger ett standardpris för alla medlemmar.

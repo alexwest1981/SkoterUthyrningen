@@ -1,6 +1,6 @@
 package org.example.membership;
 
-import org.example.Rental;
+import org.example.rental.Rental;
 import java.util.ArrayList;
 import java.util.List;
 
