@@ -49,6 +49,10 @@ public class MembershipService {
         return memberRegistry.filterByStatus(status);
     }
 
+    public Member getMember(int memberId) {
+        return memberRegistry.getMember(memberId);
+    }
+
     // Hjälpmetod för konvertering från sträng till enum med felhantering
     private MemberRegistry.StatusLevel parseStatusLevel(String statusStr) {
         try {

@@ -14,7 +14,6 @@ public class Main {
         RentalService rentalService = new RentalService(inventory, memberRegistry);
         MembershipService membershipService = new MembershipService(memberRegistry);
 
-        // Lägg till exempeldata för testning
         addSampleData(inventory, membershipService);
 
         // Skapa menyn och starta den

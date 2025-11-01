@@ -22,6 +22,9 @@ public class Inventory {
 
     /**
      * Generisk metod för att filtrera utrustning baserat på subklass.
+     * @param type Typ av utrustning tex Snowmobile.class eller Sled.class
+     * @param <T> Typparametern som är en subtyp av Item
+     * @return Lista av filtrerade Items av typen T
      */
     public <T extends Item> List<T> filterByType(Class<T> type) {
         List<T> result = new ArrayList<>();
@@ -31,5 +34,14 @@ public class Inventory {
             }
         }
         return result;
+    }
+
+    /**
+     * Metod för att hämta ett element via dess UUID som String
+     * @param id UUID som sträng
+     * @return Item eller null om ej hittad
+     */
+    public Item getItemByUUID(String id) {
+        return items.get(id);
     }
 }
